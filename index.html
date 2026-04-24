@@ -1,320 +1,822 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pillara — Your medication companion app</title>
-  <meta name="description" content="Pillara is an upcoming app designed to help you take medicines on time, understand them clearly, check over-the-counter products more safely, and stay prepared for every appointment." />
+
+  <title>Pillara — Medication support made simple</title>
+  <meta
+    name="description"
+    content="Pillara is an upcoming medication support app designed to help you stay organised, understand medicine information more clearly, and prepare better questions for your GP or pharmacist."
+  />
   <meta name="theme-color" content="#ffffff" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Figtree:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
-      --white: #ffffff;
-      --off: #f5f5f7;
-      --text: #1d1d1f;
-      --sub: #424245;
-      --muted: #86868b;
-      --border: #d2d2d7;
-      --border2: rgba(0,0,0,0.06);
-      --indigo: #5b4ff5;
-      --indigo3: #3d31d4;
-      --indigo-pale: #f0effe;
-      --violet: #9b5cf0;
-      --radius: 18px;
-      --radius-lg: 28px;
-      --radius-xl: 40px;
-      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
-      --shadow: 0 8px 40px rgba(0,0,0,0.10);
-      --shadow-lg: 0 24px 80px rgba(0,0,0,0.12);
-      --shadow-indigo: 0 16px 48px rgba(91,79,245,0.22);
-      --font-display: 'Fraunces', Georgia, serif;
-      --font-body: 'Figtree', system-ui, sans-serif;
-      --max: 1160px;
+      --white:#fff;
+      --off:#f5f5f7;
+      --text:#1d1d1f;
+      --sub:#424245;
+      --muted:#86868b;
+      --border:#d2d2d7;
+      --indigo:#5b4ff5;
+      --indigo3:#3d31d4;
+      --indigo-pale:#f0effe;
+      --violet:#9b5cf0;
+      --radius:18px;
+      --radius-lg:28px;
+      --radius-xl:40px;
+      --shadow-sm:0 2px 12px rgba(0,0,0,.06);
+      --shadow:0 8px 40px rgba(0,0,0,.10);
+      --shadow-lg:0 24px 80px rgba(0,0,0,.12);
+      --shadow-indigo:0 16px 48px rgba(91,79,245,.22);
+      --font-display:'Fraunces', Georgia, serif;
+      --font-body:'Figtree', system-ui, sans-serif;
+      --max:1160px;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body { font-family: var(--font-body); background: var(--white); color: var(--text); line-height: 1.5; overflow-x: hidden; }
-    img, svg { display: block; }
-    a { color: inherit; }
-    button, input, select, textarea { font: inherit; }
-
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
-    .skip-link { position: absolute; left: 16px; top: -48px; background: var(--indigo); color: white; padding: 10px 14px; border-radius: 10px; z-index: 999; text-decoration: none; font-size: 0.9rem; }
-    .skip-link:focus { top: 16px; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 56px; display: flex; align-items: center; background: rgba(255,255,255,0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08); }
-    .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .nav-logo { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: -0.02em; display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
-    .logo-gem { width: 26px; height: 26px; background: linear-gradient(135deg, var(--indigo), var(--violet)); border-radius: 8px; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(91,79,245,0.3); }
-    .logo-gem svg { width: 13px; height: 13px; }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--sub); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta { background: var(--indigo); color: white !important; padding: 7px 16px; border-radius: 999px; font-size: 0.82rem !important; font-weight: 600 !important; transition: background 0.2s, transform 0.15s !important; box-shadow: 0 2px 10px rgba(91,79,245,0.25); }
-    .nav-cta:hover { background: var(--indigo3) !important; transform: translateY(-1px); }
-    .nav-mobile-btn { display: none; background: none; border: none; cursor: pointer; color: var(--text); padding: 4px; }
-
-    .mobile-menu { display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 199; background: rgba(255,255,255,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(0,0,0,0.08); padding: 16px 24px 20px; }
-    .mobile-menu.open { display: block; }
-    .mobile-menu ul { list-style: none; display: grid; gap: 14px; }
-    .mobile-menu a { text-decoration: none; color: var(--sub); font-size: 0.95rem; font-weight: 500; }
-    .mobile-menu .nav-cta { display: inline-flex; width: fit-content; margin-top: 4px; }
-
-    /* HERO */
-    .hero { min-height: 100vh; padding: 140px 24px 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: -50%; background: radial-gradient(ellipse 60% 50% at 20% 30%, rgba(91,79,245,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 80% 20%, rgba(155,92,240,0.06) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 50% 80%, rgba(232,99,122,0.04) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 70% 60%, rgba(91,79,245,0.05) 0%, transparent 50%); animation: meshShift 16s ease-in-out infinite alternate; pointer-events: none; }
-    @keyframes meshShift { 0% { transform: scale(1) rotate(0deg); } 100% { transform: scale(1.08) rotate(2deg); } }
-
-    .hero-content { position: relative; z-index: 1; max-width: 860px; }
-
-    .hero-eyebrow { display: inline-flex; align-items: center; gap: 7px; background: var(--indigo-pale); border: 1px solid rgba(91,79,245,0.2); color: var(--indigo); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 2rem; animation: fadeUp 0.7s ease both; }
-    .eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--indigo); animation: pulse 2.5s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.75); } }
-
-    .hero h1 { font-family: var(--font-display); font-size: clamp(3.2rem, 7vw, 6.5rem); font-weight: 400; line-height: 1.02; letter-spacing: -0.03em; color: var(--text); margin-bottom: 1.5rem; animation: fadeUp 0.7s 0.1s ease both; }
-    .hero h1 em { font-style: italic; background: linear-gradient(135deg, var(--indigo), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-    .hero-sub { font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--muted); line-height: 1.7; max-width: 620px; margin: 0 auto 2.5rem; font-weight: 300; animation: fadeUp 0.7s 0.2s ease both; }
-
-    .platform-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; animation: fadeUp 0.7s 0.3s ease both; }
-    .platform-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--white); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: 0.78rem; font-weight: 500; color: var(--sub); box-shadow: var(--shadow-sm); }
-    .platform-pill svg { width: 13px; height: 13px; color: var(--indigo); }
-    .pill-soon { font-size: 0.65rem; font-weight: 700; color: var(--indigo); letter-spacing: 0.04em; text-transform: uppercase; }
-
-    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; animation: fadeUp 0.7s 0.35s ease both; }
-    .btn-fill { background: var(--indigo); color: white; padding: 15px 30px; border-radius: 999px; font-weight: 600; font-size: 0.96rem; text-decoration: none; display: inline-block; box-shadow: var(--shadow-indigo); transition: background 0.2s, transform 0.2s, box-shadow 0.2s; }
-    .btn-fill:hover { background: var(--indigo3); transform: translateY(-2px); box-shadow: 0 20px 56px rgba(91,79,245,0.3); }
-    .btn-outline { background: transparent; color: var(--indigo); padding: 15px 30px; border-radius: 999px; border: 1.5px solid rgba(91,79,245,0.3); font-weight: 500; font-size: 0.96rem; text-decoration: none; display: inline-block; transition: border-color 0.2s, background 0.2s, transform 0.2s; }
-    .btn-outline:hover { border-color: var(--indigo); background: var(--indigo-pale); transform: translateY(-2px); }
-
-    .hero-fine { font-size: 0.78rem; color: var(--muted); animation: fadeUp 0.7s 0.4s ease both; }
-    .hero-fine::before { content: '🔒  '; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* PHONE SHOWCASE */
-    .phone-showcase { padding: 80px 24px 0; display: flex; justify-content: center; position: relative; z-index: 1; animation: fadeUp 0.8s 0.5s ease both; }
-    .phones-scene { position: relative; display: flex; align-items: flex-end; justify-content: center; }
-    .pshell { background: #1c1c1e; border-radius: 50px; padding: 12px; box-shadow: 0 0 0 1px rgba(255,255,255,0.1) inset, 0 0 0 1px rgba(0,0,0,0.5), var(--shadow-lg), 0 60px 120px rgba(91,79,245,0.15); position: relative; flex-shrink: 0; }
-    .pshell::before { content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 80px; height: 30px; background: #1c1c1e; border-radius: 0 0 20px 20px; z-index: 10; }
-    .pshell-main { width: 260px; z-index: 3; animation: floatMain 6s ease-in-out infinite; }
-    .pshell-side { width: 200px; opacity: 0.75; }
-    .pshell-left { transform: rotate(-8deg) translateX(32px) translateY(24px); z-index: 2; animation: floatLeft 7s ease-in-out infinite; }
-    .pshell-right { transform: rotate(8deg) translateX(-32px) translateY(24px); z-index: 2; animation: floatRight 7s 1s ease-in-out infinite; }
-    @keyframes floatMain { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-    @keyframes floatLeft { 0%, 100% { transform: rotate(-8deg) translateX(32px) translateY(24px); } 50% { transform: rotate(-8deg) translateX(32px) translateY(14px); } }
-    @keyframes floatRight { 0%, 100% { transform: rotate(8deg) translateX(-32px) translateY(24px); } 50% { transform: rotate(8deg) translateX(-32px) translateY(14px); } }
-
-    .pscreen { background: #f2f2f7; border-radius: 40px; overflow: hidden; position: relative; }
-    .pscreen-main { height: 520px; }
-    .pscreen-side { height: 400px; }
-    .pstatus { height: 44px; background: #f2f2f7; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 20px 8px; }
-    .pstatus-time { font-size: 0.7rem; font-weight: 700; color: #1c1c1e; }
-    .pstatus-icons { display: flex; align-items: center; gap: 4px; font-size: 0.55rem; color: #1c1c1e; }
-    .papp { background: #f2f2f7; padding: 0 14px 16px; height: calc(100% - 44px); overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
-    .pgreet { display: flex; justify-content: space-between; align-items: center; padding: 4px 0 6px; }
-    .pgreet-hi { font-size: 0.65rem; color: #86868b; }
-    .pgreet-name { font-size: 1rem; font-weight: 700; color: #1c1c1e; letter-spacing: -0.02em; }
-    .pavatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--violet)); display: grid; place-items: center; font-size: 0.65rem; font-weight: 700; color: white; }
-    .pcard { background: white; border-radius: 18px; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-    .pcard-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
-    .pcard-label.indigo { color: var(--indigo); }
-    .pcard-label.amber { color: #f59e0b; }
-    .pcard-label.blue { color: #3b82f6; }
-    .dose-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f2f2f7; }
-    .dose-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .dose-name { font-size: 0.75rem; font-weight: 600; color: #1c1c1e; }
-    .dose-when { font-size: 0.62rem; color: #86868b; margin-top: 1px; }
-    .dose-check { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 0.6rem; flex-shrink: 0; }
-    .dose-check.done { background: linear-gradient(135deg, var(--indigo), var(--violet)); color: white; }
-    .dose-check.todo { border: 1.5px solid #d2d2d7; background: white; }
-    .otc-alert-row { display: flex; align-items: flex-start; gap: 8px; }
-    .otc-icon { width: 28px; height: 28px; border-radius: 8px; background: #fff3cd; display: grid; place-items: center; font-size: 0.75rem; flex-shrink: 0; }
-    .otc-text { flex: 1; }
-    .otc-drug { font-size: 0.75rem; font-weight: 600; color: #1c1c1e; }
-    .otc-msg { font-size: 0.62rem; color: #86868b; margin-top: 2px; line-height: 1.45; }
-    .otc-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.55rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
-    .appt-row { display: flex; align-items: center; gap: 12px; }
-    .appt-date { width: 38px; text-align: center; background: linear-gradient(135deg, var(--indigo), var(--violet)); border-radius: 10px; padding: 6px 0; flex-shrink: 0; }
-    .appt-month { font-size: 0.52rem; font-weight: 700; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.05em; }
-    .appt-day { font-size: 1.1rem; font-weight: 800; color: white; line-height: 1; }
-    .appt-title { font-size: 0.75rem; font-weight: 600; color: #1c1c1e; }
-    .appt-sub { font-size: 0.62rem; color: #86868b; margin-top: 2px; }
-    .safe-item { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 10px; }
-    .safe-item.ok { background: #f0fdf4; }
-    .safe-item.warn { background: #fffbeb; }
-    .safe-item-icon { font-size: 0.9rem; flex-shrink: 0; }
-    .safe-item-text { font-size: 0.62rem; color: #1c1c1e; font-weight: 500; line-height: 1.4; }
-    .appt-screen { padding: 12px; height: 100%; background: #f2f2f7; display: flex; flex-direction: column; gap: 8px; }
-    .appt-screen-label { font-size: 0.6rem; font-weight: 700; color: var(--indigo); letter-spacing: 0.06em; text-transform: uppercase; }
-    .appt-screen-title { font-size: 0.85rem; font-weight: 700; color: #1c1c1e; letter-spacing: -0.01em; }
-    .question-list { display: flex; flex-direction: column; gap: 6px; }
-    .question-item { display: flex; align-items: flex-start; gap: 6px; background: white; border-radius: 10px; padding: 8px 10px; font-size: 0.62rem; color: #1c1c1e; line-height: 1.45; }
-    .q-num { width: 16px; height: 16px; border-radius: 50%; background: var(--indigo-pale); color: var(--indigo); font-size: 0.55rem; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
-    .phone-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to bottom, transparent, var(--white)); pointer-events: none; z-index: 4; }
-
-    /* SECTIONS */
-    section { position: relative; }
-    .section-wrap { max-width: var(--max); margin: 0 auto; padding: 120px 24px; }
-    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--indigo); margin-bottom: 14px; }
-    h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.6rem); font-weight: 400; letter-spacing: -0.03em; color: var(--text); line-height: 1.1; margin-bottom: 1.25rem; }
-    h2 em { font-style: italic; color: var(--indigo); }
-    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 600px; line-height: 1.8; font-weight: 300; }
-
-    /* PROBLEM */
-    .problem-bg { background: var(--off); }
-    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 3.5rem; }
-    .problem-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 24px; box-shadow: var(--shadow-sm); transition: box-shadow 0.25s, transform 0.25s; }
-    .problem-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-    .prob-num { font-family: var(--font-display); font-size: 2rem; font-weight: 300; color: rgba(91,79,245,0.15); line-height: 1; margin-bottom: 12px; letter-spacing: -0.03em; }
-    .prob-text { font-size: 0.94rem; color: var(--sub); line-height: 1.7; }
-    .prob-text strong { color: var(--text); font-weight: 600; }
-
-    /* FEATURES */
-    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 3.5rem; }
-    .feat-card { background: var(--off); border: 1px solid var(--border2); border-radius: var(--radius-xl); padding: 40px 36px; position: relative; overflow: hidden; transition: box-shadow 0.25s, transform 0.25s; }
-    .feat-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
-    .feat-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; opacity: 0.5; filter: blur(40px); pointer-events: none; }
-    .feat-card.c1::before { background: var(--indigo); }
-    .feat-card.c2::before { background: #f59e0b; }
-    .feat-card.c3::before { background: #3b82f6; }
-    .feat-card.c4::before { background: var(--violet); }
-    .feat-icon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 1.4rem; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
-    .fi-1 { background: linear-gradient(135deg, #eef0ff, #dddeff); }
-    .fi-2 { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
-    .fi-3 { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
-    .fi-4 { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
-    .feat-card h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 400; color: var(--text); margin-bottom: 10px; letter-spacing: -0.02em; line-height: 1.2; }
-    .feat-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
-
-    /* HOW */
-    .how-bg { background: var(--off); }
-    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 3.5rem; position: relative; }
-    .how-steps::before { content: ''; position: absolute; top: 27px; left: 6%; right: 6%; height: 1px; background: var(--border); }
-    .how-step { text-align: center; position: relative; }
-    .how-num { width: 54px; height: 54px; border-radius: 50%; background: var(--white); border: 1px solid var(--border); box-shadow: var(--shadow-sm); display: grid; place-items: center; font-family: var(--font-display); font-size: 1.25rem; font-weight: 400; color: var(--indigo); margin: 0 auto 20px; position: relative; z-index: 1; }
-    .how-step h4 { font-size: 0.96rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-    .how-step p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
-
-    /* TRUST */
-    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 3.5rem; }
-    .trust-card { background: var(--off); border: 1px solid var(--border2); border-radius: var(--radius-lg); padding: 32px 28px; transition: box-shadow 0.25s; }
-    .trust-card:hover { box-shadow: var(--shadow); }
-    .trust-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
-    .trust-card h4 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
-    .trust-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
-    .trust-disclaimer { margin-top: 3rem; background: var(--indigo-pale); border: 1px solid rgba(91,79,245,0.15); border-radius: var(--radius); padding: 20px 24px; font-size: 0.88rem; color: var(--sub); line-height: 1.75; max-width: 800px; }
-    .trust-disclaimer strong { color: var(--indigo); }
-
-    /* WAITLIST */
-    .waitlist-bg { background: linear-gradient(160deg, #fafafe 0%, #f4f3ff 50%, #fafafe 100%); }
-    .waitlist-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .waitlist-left h2 { margin-bottom: 1rem; }
-    .waitlist-left > p { font-size: 1rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
-    .perks { display: grid; gap: 14px; }
-    .perk-row { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: var(--sub); line-height: 1.6; }
-    .perk-check { width: 20px; height: 20px; border-radius: 50%; background: var(--indigo-pale); border: 1px solid rgba(91,79,245,0.2); display: grid; place-items: center; flex-shrink: 0; margin-top: 1px; }
-    .perk-check svg { width: 10px; height: 10px; color: var(--indigo); }
-
-    .form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px 32px; box-shadow: var(--shadow); }
-    .form-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; color: var(--text); margin-bottom: 4px; letter-spacing: -0.02em; }
-    .form-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; font-weight: 300; }
-    .field { display: grid; gap: 7px; margin-bottom: 14px; }
-    .field label { font-size: 0.82rem; font-weight: 600; color: var(--sub); }
-    .field input, .field select, .field textarea { width: 100%; background: var(--off); border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; color: var(--text); font-size: 0.94rem; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none; outline: none; }
-    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--indigo); background: var(--white); box-shadow: 0 0 0 3px rgba(91,79,245,0.1); }
-    .field input::placeholder, .field textarea::placeholder { color: #c7c7cc; }
-    .field textarea { resize: vertical; min-height: 88px; }
-    .field small { font-size: 0.76rem; color: var(--muted); line-height: 1.5; font-weight: 300; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .plat-label { font-size: 0.82rem; font-weight: 600; color: var(--sub); display: block; margin-bottom: 8px; }
-    .plat-chips { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
-    .plat-opt { display: none; }
-    .plat-opt + label { display: flex; align-items: center; gap: 6px; background: var(--off); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 14px; font-size: 0.8rem; font-weight: 500; color: var(--sub); cursor: pointer; transition: all 0.15s; }
-    .plat-opt + label svg { width: 13px; height: 13px; }
-    .plat-opt:checked + label { background: var(--indigo-pale); border-color: rgba(91,79,245,0.35); color: var(--indigo); }
-    .consent-row { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin: 14px 0; cursor: pointer; }
-    .consent-row input { width: auto; margin-top: 3px; flex-shrink: 0; accent-color: var(--indigo); }
-    #form-error { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 10px; padding: 11px 14px; font-size: 0.84rem; color: #be123c; margin-bottom: 12px; display: none; }
-    .btn-submit { width: 100%; background: var(--indigo); color: white; border: none; border-radius: 999px; padding: 14px 24px; font-size: 0.96rem; font-weight: 600; cursor: pointer; letter-spacing: -0.01em; box-shadow: var(--shadow-indigo); transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
-    .btn-submit:hover { background: var(--indigo3); transform: translateY(-1px); box-shadow: 0 12px 32px rgba(91,79,245,0.3); }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .form-fine { text-align: center; margin-top: 12px; font-size: 0.74rem; color: var(--muted); font-weight: 300; }
-    #form-success { display: none; text-align: center; padding: 20px 0; }
-    .success-icon { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--violet)); display: grid; place-items: center; margin: 0 auto 20px; font-size: 1.5rem; color: white; box-shadow: 0 8px 24px rgba(91,79,245,0.3); }
-    .success-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: 8px; letter-spacing: -0.02em; }
-    .success-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; max-width: 300px; margin: 0 auto; }
-
-    /* FAQ */
-    .faq-bg { background: var(--off); }
-    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 3.5rem; }
-    .faq-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: box-shadow 0.2s; }
-    .faq-item:hover { box-shadow: var(--shadow-sm); }
-    .faq-item details summary { list-style: none; cursor: pointer; padding: 20px 24px; padding-right: 52px; font-weight: 600; font-size: 0.93rem; color: var(--text); position: relative; }
-    .faq-item details summary::-webkit-details-marker { display: none; }
-    .faq-item details summary::after { content: '+'; position: absolute; right: 22px; top: 18px; font-size: 1.1rem; color: var(--indigo); font-weight: 300; font-family: var(--font-display); }
-    .faq-item details[open] summary::after { content: '\2013'; }
-    .faq-answer { padding: 0 24px 20px; font-size: 0.9rem; color: var(--muted); line-height: 1.75; font-weight: 300; }
-
-    /* CTA BOTTOM */
-    .cta-bottom { background: var(--white); text-align: center; }
-    .cta-inner { max-width: 720px; margin: 0 auto; }
-    .cta-bottom h2 { margin-bottom: 1rem; }
-    .cta-bottom p { font-size: 1.05rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 2.5rem; }
-    .store-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
-    .store-btn { display: flex; align-items: center; gap: 10px; background: var(--off); border: 1px solid var(--border); border-radius: 14px; padding: 11px 20px; text-decoration: none; color: var(--text); box-shadow: var(--shadow-sm); opacity: 0.6; cursor: default; }
-    .store-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .store-btn-sub { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; text-align: left; }
-    .store-btn-name { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; text-align: left; }
-    .store-btn-soon { font-size: 0.62rem; color: var(--indigo); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-left: 6px; }
-
-    /* FOOTER */
-    footer { background: var(--off); border-top: 1px solid var(--border); padding: 32px 24px; }
-    .footer-inner { max-width: var(--max); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
-    .footer-logo .logo-gem { width: 22px; height: 22px; border-radius: 7px; }
-    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
-    .footer-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 0.78rem; color: var(--muted); }
-
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .reveal.in { opacity: 1; transform: translateY(0); }
-
-    /* RESPONSIVE */
-    @media (max-width: 1000px) {
-      .pshell-side { display: none; }
-      .phones-scene { justify-content: center; }
-      .waitlist-inner { grid-template-columns: 1fr; gap: 48px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .trust-grid { grid-template-columns: 1fr; }
-      .how-steps { grid-template-columns: repeat(2, 1fr); }
-      .how-steps::before { display: none; }
-      .faq-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .nav-mobile-btn { display: block; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+    body {
+      font-family:var(--font-body);
+      background:var(--white);
+      color:var(--text);
+      line-height:1.5;
+      overflow-x:hidden;
     }
-    @media (max-width: 640px) {
-      .how-steps { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .plat-chips { flex-direction: column; }
-      .plat-opt + label { width: 100%; }
-      footer .footer-inner { flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
-      .pshell-main { width: 220px; }
-      .pscreen-main { height: 440px; }
+
+    a { color:inherit; }
+    button,input,select,textarea { font:inherit; }
+
+    .skip-link {
+      position:absolute;
+      top:-48px;
+      left:16px;
+      z-index:999;
+      background:var(--indigo);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-size:.9rem;
+    }
+    .skip-link:focus { top:16px; }
+
+    nav {
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:200;
+      height:56px;
+      display:flex;
+      align-items:center;
+      background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(180%) blur(20px);
+      -webkit-backdrop-filter:saturate(180%) blur(20px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+
+    .nav-inner {
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 24px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .nav-logo {
+      font-family:var(--font-display);
+      font-size:1.2rem;
+      font-weight:600;
+      color:var(--text);
+      text-decoration:none;
+      letter-spacing:-.02em;
+      display:flex;
+      align-items:center;
+      gap:9px;
+    }
+
+    .logo-gem {
+      width:26px;
+      height:26px;
+      background:linear-gradient(135deg,var(--indigo),var(--violet));
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      box-shadow:0 2px 8px rgba(91,79,245,.3);
+    }
+    .logo-gem svg { width:13px; height:13px; }
+
+    .nav-links {
+      display:flex;
+      align-items:center;
+      gap:28px;
+      list-style:none;
+    }
+
+    .nav-links a {
+      font-size:.82rem;
+      font-weight:500;
+      color:var(--sub);
+      text-decoration:none;
+    }
+
+    .nav-cta {
+      background:var(--indigo);
+      color:white !important;
+      padding:7px 16px;
+      border-radius:999px;
+      font-weight:600 !important;
+      box-shadow:0 2px 10px rgba(91,79,245,.25);
+    }
+
+    .nav-mobile-btn {
+      display:none;
+      background:none;
+      border:none;
+      cursor:pointer;
+      color:var(--text);
+    }
+
+    .mobile-menu {
+      display:none;
+      position:fixed;
+      top:56px;
+      left:0;
+      right:0;
+      z-index:199;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      padding:16px 24px 20px;
+    }
+
+    .mobile-menu.open { display:block; }
+
+    .mobile-menu ul {
+      list-style:none;
+      display:grid;
+      gap:14px;
+    }
+
+    .mobile-menu a {
+      text-decoration:none;
+      color:var(--sub);
+      font-size:.95rem;
+      font-weight:500;
+    }
+
+    .hero {
+      min-height:100vh;
+      padding:140px 24px 80px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before {
+      content:'';
+      position:absolute;
+      inset:-50%;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(91,79,245,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(155,92,240,.06) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 50% 80%, rgba(232,99,122,.04) 0%, transparent 60%);
+      animation:meshShift 16s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+
+    @keyframes meshShift {
+      from { transform:scale(1) rotate(0deg); }
+      to { transform:scale(1.08) rotate(2deg); }
+    }
+
+    .hero-content {
+      position:relative;
+      z-index:1;
+      max-width:860px;
+    }
+
+    .hero-eyebrow {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      background:var(--indigo-pale);
+      border:1px solid rgba(91,79,245,.2);
+      color:var(--indigo);
+      font-size:.75rem;
+      font-weight:600;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      padding:5px 14px;
+      border-radius:999px;
+      margin-bottom:2rem;
+    }
+
+    .eyebrow-dot {
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--indigo);
+    }
+
+    .hero h1 {
+      font-family:var(--font-display);
+      font-size:clamp(3.2rem,7vw,6.5rem);
+      font-weight:400;
+      line-height:1.02;
+      letter-spacing:-.03em;
+      margin-bottom:1.5rem;
+    }
+
+    .hero h1 em {
+      font-style:italic;
+      background:linear-gradient(135deg,var(--indigo),var(--violet));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .hero-sub {
+      font-size:clamp(1rem,1.8vw,1.2rem);
+      color:var(--muted);
+      line-height:1.7;
+      max-width:660px;
+      margin:0 auto 2.5rem;
+      font-weight:300;
+    }
+
+    .platform-pills {
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-bottom:2.5rem;
+    }
+
+    .platform-pill {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:white;
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:6px 14px;
+      font-size:.78rem;
+      font-weight:500;
+      color:var(--sub);
+      box-shadow:var(--shadow-sm);
+    }
+
+    .pill-soon {
+      font-size:.65rem;
+      font-weight:700;
+      color:var(--indigo);
+      text-transform:uppercase;
+    }
+
+    .hero-ctas {
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-bottom:1.25rem;
+    }
+
+    .btn-fill,
+    .btn-outline {
+      padding:15px 30px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:.96rem;
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    .btn-fill {
+      background:var(--indigo);
+      color:white;
+      box-shadow:var(--shadow-indigo);
+    }
+
+    .btn-outline {
+      color:var(--indigo);
+      border:1.5px solid rgba(91,79,245,.3);
+      background:transparent;
+    }
+
+    .hero-fine {
+      font-size:.78rem;
+      color:var(--muted);
+    }
+
+    .section-wrap {
+      max-width:var(--max);
+      margin:0 auto;
+      padding:120px 24px;
+    }
+
+    .section-label {
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--indigo);
+      margin-bottom:14px;
+    }
+
+    h2 {
+      font-family:var(--font-display);
+      font-size:clamp(2.2rem,4vw,3.6rem);
+      font-weight:400;
+      letter-spacing:-.03em;
+      line-height:1.1;
+      margin-bottom:1.25rem;
+    }
+
+    h2 em {
+      font-style:italic;
+      color:var(--indigo);
+    }
+
+    .section-sub {
+      font-size:1.05rem;
+      color:var(--muted);
+      max-width:620px;
+      line-height:1.8;
+      font-weight:300;
+    }
+
+    .problem-bg,
+    .how-bg,
+    .faq-bg {
+      background:var(--off);
+    }
+
+    .problem-grid,
+    .features-grid,
+    .trust-grid,
+    .faq-grid {
+      display:grid;
+      gap:18px;
+      margin-top:3.5rem;
+    }
+
+    .problem-grid { grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+    .features-grid { grid-template-columns:repeat(2,1fr); }
+    .trust-grid { grid-template-columns:repeat(3,1fr); }
+    .faq-grid { grid-template-columns:repeat(2,1fr); }
+
+    .problem-card,
+    .feat-card,
+    .trust-card,
+    .faq-item {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      padding:28px 24px;
+      box-shadow:var(--shadow-sm);
+    }
+
+    .feat-card {
+      background:var(--off);
+      border-color:rgba(0,0,0,.06);
+      border-radius:var(--radius-xl);
+      padding:40px 36px;
+    }
+
+    .prob-num {
+      font-family:var(--font-display);
+      font-size:2rem;
+      color:rgba(91,79,245,.18);
+      margin-bottom:12px;
+    }
+
+    .prob-text,
+    .feat-card p,
+    .trust-card p,
+    .faq-answer {
+      color:var(--muted);
+      line-height:1.75;
+      font-weight:300;
+    }
+
+    .feat-icon {
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:1.4rem;
+      margin-bottom:20px;
+      background:var(--indigo-pale);
+    }
+
+    .feat-card h3,
+    .trust-card h4 {
+      font-size:1.15rem;
+      margin-bottom:10px;
+      color:var(--text);
+    }
+
+    .how-steps {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:24px;
+      margin-top:3.5rem;
+    }
+
+    .how-step {
+      text-align:center;
+    }
+
+    .how-num {
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      background:white;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);
+      display:grid;
+      place-items:center;
+      font-family:var(--font-display);
+      color:var(--indigo);
+      margin:0 auto 20px;
+      font-size:1.25rem;
+    }
+
+    .how-step h4 {
+      margin-bottom:6px;
+      font-size:.96rem;
+    }
+
+    .how-step p {
+      font-size:.86rem;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .trust-disclaimer {
+      margin-top:3rem;
+      background:var(--indigo-pale);
+      border:1px solid rgba(91,79,245,.15);
+      border-radius:var(--radius);
+      padding:20px 24px;
+      font-size:.88rem;
+      color:var(--sub);
+      line-height:1.75;
+      max-width:850px;
+    }
+
+    .trust-disclaimer strong {
+      color:var(--indigo);
+    }
+
+    .waitlist-bg {
+      background:linear-gradient(160deg,#fafafe 0%,#f4f3ff 50%,#fafafe 100%);
+    }
+
+    .waitlist-inner {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:80px;
+      align-items:start;
+    }
+
+    .waitlist-left > p {
+      font-size:1rem;
+      color:var(--muted);
+      line-height:1.8;
+      margin-bottom:2rem;
+    }
+
+    .perks {
+      display:grid;
+      gap:14px;
+    }
+
+    .perk-row {
+      display:flex;
+      gap:12px;
+      font-size:.9rem;
+      color:var(--sub);
+      line-height:1.6;
+    }
+
+    .perk-check {
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:var(--indigo-pale);
+      color:var(--indigo);
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      margin-top:1px;
+      font-size:.75rem;
+    }
+
+    .form-card {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      padding:36px 32px;
+      box-shadow:var(--shadow);
+    }
+
+    .form-title {
+      font-family:var(--font-display);
+      font-size:1.3rem;
+      margin-bottom:4px;
+    }
+
+    .form-sub {
+      font-size:.85rem;
+      color:var(--muted);
+      margin-bottom:24px;
+    }
+
+    .form-row {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .field {
+      display:grid;
+      gap:7px;
+      margin-bottom:14px;
+    }
+
+    .field label,
+    .plat-label {
+      font-size:.82rem;
+      font-weight:600;
+      color:var(--sub);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width:100%;
+      background:var(--off);
+      border:1.5px solid var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      color:var(--text);
+      outline:none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color:var(--indigo);
+      background:white;
+      box-shadow:0 0 0 3px rgba(91,79,245,.1);
+    }
+
+    .field textarea {
+      min-height:88px;
+      resize:vertical;
+    }
+
+    .field small,
+    .form-fine {
+      font-size:.76rem;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .plat-chips {
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin:8px 0 14px;
+    }
+
+    .plat-opt {
+      display:none;
+    }
+
+    .plat-opt + label {
+      display:flex;
+      align-items:center;
+      gap:6px;
+      background:var(--off);
+      border:1.5px solid var(--border);
+      border-radius:10px;
+      padding:8px 14px;
+      font-size:.8rem;
+      font-weight:500;
+      color:var(--sub);
+      cursor:pointer;
+    }
+
+    .plat-opt:checked + label {
+      background:var(--indigo-pale);
+      border-color:rgba(91,79,245,.35);
+      color:var(--indigo);
+    }
+
+    .consent-row {
+      display:flex;
+      gap:10px;
+      font-size:.82rem;
+      color:var(--muted);
+      line-height:1.6;
+      margin:14px 0;
+      cursor:pointer;
+    }
+
+    .consent-row input {
+      margin-top:3px;
+      accent-color:var(--indigo);
+    }
+
+    #form-error {
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      border-radius:10px;
+      padding:11px 14px;
+      font-size:.84rem;
+      color:#be123c;
+      margin-bottom:12px;
+      display:none;
+    }
+
+    .btn-submit {
+      width:100%;
+      background:var(--indigo);
+      color:white;
+      border:none;
+      border-radius:999px;
+      padding:14px 24px;
+      font-size:.96rem;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:var(--shadow-indigo);
+    }
+
+    #form-success {
+      display:none;
+      text-align:center;
+      padding:20px 0;
+    }
+
+    .success-icon {
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--indigo),var(--violet));
+      display:grid;
+      place-items:center;
+      margin:0 auto 20px;
+      color:white;
+      font-size:1.5rem;
+    }
+
+    .success-title {
+      font-family:var(--font-display);
+      font-size:1.5rem;
+      margin-bottom:8px;
+    }
+
+    .success-sub {
+      color:var(--muted);
+      max-width:320px;
+      margin:0 auto;
+      line-height:1.7;
+    }
+
+    .faq-item {
+      padding:0;
+      overflow:hidden;
+    }
+
+    .faq-item summary {
+      cursor:pointer;
+      padding:20px 24px;
+      font-weight:600;
+      list-style:none;
+    }
+
+    .faq-answer {
+      padding:0 24px 20px;
+      font-size:.9rem;
+    }
+
+    .cta-bottom {
+      text-align:center;
+      background:white;
+    }
+
+    .cta-inner {
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .cta-bottom p {
+      font-size:1.05rem;
+      color:var(--muted);
+      line-height:1.8;
+      margin-bottom:2.5rem;
+    }
+
+    footer {
+      background:var(--off);
+      border-top:1px solid var(--border);
+      padding:32px 24px;
+    }
+
+    .footer-inner {
+      max-width:var(--max);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:16px;
+    }
+
+    .footer-logo {
+      font-family:var(--font-display);
+      font-size:1.1rem;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .footer-links {
+      display:flex;
+      gap:1.5rem;
+      list-style:none;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a {
+      color:var(--muted);
+      text-decoration:none;
+      font-size:.84rem;
+    }
+
+    .footer-copy {
+      color:var(--muted);
+      font-size:.78rem;
+      max-width:420px;
+    }
+
+    @media (max-width:1000px) {
+      .nav-links { display:none; }
+      .nav-mobile-btn { display:block; }
+      .features-grid,
+      .trust-grid,
+      .faq-grid,
+      .waitlist-inner {
+        grid-template-columns:1fr;
+      }
+      .how-steps {
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width:640px) {
+      .form-row,
+      .how-steps {
+        grid-template-columns:1fr;
+      }
+      .plat-chips {
+        flex-direction:column;
+      }
+      .plat-opt + label {
+        width:100%;
+      }
+      .footer-inner {
+        flex-direction:column;
+        text-align:center;
+      }
+      .footer-links {
+        justify-content:center;
+      }
     }
   </style>
-
 </head>
+
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
 
@@ -328,6 +830,7 @@
         </span>
         Pillara
       </a>
+
       <ul class="nav-links">
         <li><a href="#features">Features</a></li>
         <li><a href="#how">How it works</a></li>
@@ -335,10 +838,9 @@
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#waitlist" class="nav-cta">Get early access</a></li>
       </ul>
+
       <button class="nav-mobile-btn" id="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
+        ☰
       </button>
     </div>
   </nav>
@@ -357,296 +859,440 @@
     <section id="top">
       <div class="hero">
         <div class="hero-content">
-          <div class="hero-eyebrow"><span class="eyebrow-dot"></span>Coming soon &mdash; join the waitlist</div>
-          <h1>Medicine, <em>finally</em><br />made simple.</h1>
-          <p class="hero-sub">Pillara is an upcoming app designed to help you take medicines on time, understand them clearly, check over-the-counter products more safely, and stay prepared for every appointment.</p>
-          <div class="platform-pills">
-            <span class="platform-pill">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.27.07 2.14.82 3.04.82.9 0 2.58-1.01 4.35-.86 1.41.1 2.69.72 3.47 1.96-3.2 1.92-2.69 5.93.51 7.27-.6 1.67-1.4 3.33-3.37 3.67zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-              iOS &amp; iPadOS <span class="pill-soon">Soon</span>
-            </span>
-            <span class="platform-pill">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5S11 23.33 11 22.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v9c0 .83.67 1.5 1.5 1.5S5 19.33 5 18.5v-9C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-9c0-.83-.67-1.5-1.5-1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.88.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.9 5.9 0 0 0 6 7h12a5.9 5.9 0 0 0-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>
-              Android <span class="pill-soon">Soon</span>
-            </span>
-            <span class="platform-pill">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              Web app <span class="pill-soon">Soon</span>
-            </span>
+          <div class="hero-eyebrow">
+            <span class="eyebrow-dot"></span>
+            Coming soon — join the waitlist
           </div>
+
+          <h1>Medicine, <em>finally</em><br />made simpler.</h1>
+
+          <p class="hero-sub">
+            Pillara is an upcoming medication support app designed to help you stay on top of routines,
+            understand medicine information more clearly, and prepare better questions for your GP or pharmacist.
+          </p>
+
+          <div class="platform-pills">
+            <span class="platform-pill">iOS & iPadOS <span class="pill-soon">Soon</span></span>
+            <span class="platform-pill">Android <span class="pill-soon">Soon</span></span>
+            <span class="platform-pill">Web app <span class="pill-soon">Soon</span></span>
+          </div>
+
           <div class="hero-ctas">
             <a href="#waitlist" class="btn-fill">Get early access</a>
-            <a href="#features" class="btn-outline">See what&rsquo;s inside</a>
+            <a href="#features" class="btn-outline">See what’s inside</a>
           </div>
+
           <p class="hero-fine">No credit card. No medical data required at signup.</p>
         </div>
+      </div>
+    </section>
 
-```
-    <div class="phone-showcase" aria-hidden="true">
-      <div class="phones-scene">
-        <div class="pshell pshell-side pshell-left">
-          <div class="pscreen pscreen-side">
-            <div class="pstatus"><span class="pstatus-time">9:41</span><span class="pstatus-icons">&#9650; &#9644; &#9646;</span></div>
-            <div style="padding:0 10px 10px;background:#f2f2f7;height:calc(100% - 44px);">
-              <div style="background:white;border-radius:16px;padding:14px;height:100%;">
-                <div class="pcard-label indigo" style="margin-bottom:8px;">OTC Safety Check</div>
-                <div style="font-size:0.82rem;font-weight:700;color:#1c1c1e;margin-bottom:12px;">Paracetamol 500mg</div>
-                <div class="safe-item ok" style="margin-bottom:8px;"><span class="safe-item-icon">&#9989;</span><span class="safe-item-text">Safe with your current medicines</span></div>
-                <div class="safe-item warn"><span class="safe-item-icon">&#9888;&#65039;</span><span class="safe-item-text">Check max daily dose with your pharmacist</span></div>
-              </div>
-            </div>
+    <section class="problem-bg" id="problem">
+      <div class="section-wrap">
+        <div>
+          <div class="section-label">The challenge</div>
+          <h2>Managing medicines<br />can feel harder than it <em>should</em>.</h2>
+          <p class="section-sub">
+            Many people rely on memory, paper notes, or scattered information. Pillara is being built
+            to make everyday medicine routines easier to organise and discuss with healthcare professionals.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="prob-num">01</div>
+            <p class="prob-text"><strong>Remembering routines</strong> can be difficult when there is more than one medicine involved.</p>
+          </div>
+          <div class="problem-card">
+            <div class="prob-num">02</div>
+            <p class="prob-text">Medicine information can feel <strong>confusing or hard to interpret</strong> without plain-language support.</p>
+          </div>
+          <div class="problem-card">
+            <div class="prob-num">03</div>
+            <p class="prob-text">Over-the-counter products can raise questions that are worth discussing with a pharmacist.</p>
+          </div>
+          <div class="problem-card">
+            <div class="prob-num">04</div>
+            <p class="prob-text">Appointments can feel rushed, and it is easy to forget the questions you meant to ask.</p>
+          </div>
+          <div class="problem-card">
+            <div class="prob-num">05</div>
+            <p class="prob-text">Carers often carry the extra responsibility of keeping someone else’s routine organised.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-wrap">
+        <div>
+          <div class="section-label">What the app does</div>
+          <h2>Four tools.<br />One simple app.</h2>
+        </div>
+
+        <div class="features-grid">
+          <div class="feat-card">
+            <div class="feat-icon">⏰</div>
+            <h3>Medication routine reminders</h3>
+            <p>
+              Set a schedule for each medicine and receive helpful reminders so staying consistent
+              feels easier and less stressful.
+            </p>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-icon">📖</div>
+            <h3>Clearer medicine information</h3>
+            <p>
+              Keep medicine details in one place with plain-language information that helps you feel
+              more informed when speaking with your GP or pharmacist.
+            </p>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-icon">📅</div>
+            <h3>Appointment preparation</h3>
+            <p>
+              Track GP and pharmacist appointments, prepare questions in advance, and keep follow-up
+              notes organised.
+            </p>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-icon">🔍</div>
+            <h3>OTC information prompts</h3>
+            <p>
+              When considering an over-the-counter product, Pillara can help highlight information
+              worth checking with your pharmacist.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-bg" id="how">
+      <div class="section-wrap">
+        <div>
+          <div class="section-label">Getting started</div>
+          <h2>Up and running<br />in minutes.</h2>
+          <p class="section-sub">
+            Pillara is designed to feel simple from the first screen. No complicated setup. No clinical jargon.
+          </p>
+        </div>
+
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="how-num">1</div>
+            <h4>Join early access</h4>
+            <p>Sign up to hear when Pillara opens on your preferred platform.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-num">2</div>
+            <h4>Set up your routine</h4>
+            <p>Add medicines, reminder times, and helpful notes.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-num">3</div>
+            <h4>Stay organised</h4>
+            <p>Use reminders and saved information to support your daily routine.</p>
+          </div>
+
+          <div class="how-step">
+            <div class="how-num">4</div>
+            <h4>Prepare better questions</h4>
+            <p>Bring clearer notes and questions to your GP or pharmacist.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="safety">
+      <div class="section-wrap">
+        <div>
+          <div class="section-label">Safety & trust</div>
+          <h2>Built to support<br />safer <em>conversations.</em></h2>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="trust-icon">🔒</div>
+            <h4>Privacy-minded by design</h4>
+            <p>
+              Pillara is being built with secure handling, privacy, and user control in mind.
+              Full privacy details will be published before launch.
+            </p>
+          </div>
+
+          <div class="trust-card">
+            <div class="trust-icon">🌿</div>
+            <h4>Designed for everyday people</h4>
+            <p>
+              Pillara is intended to support patients and carers with clearer organisation —
+              without confusing terminology.
+            </p>
+          </div>
+
+          <div class="trust-card">
+            <div class="trust-icon">🤝</div>
+            <h4>Works alongside your care team</h4>
+            <p>
+              Pillara helps you stay organised and prepare for conversations with your GP,
+              pharmacist, or other qualified healthcare professional.
+            </p>
           </div>
         </div>
 
-        <div class="pshell pshell-main">
-          <div class="pscreen pscreen-main">
-            <div class="pstatus"><span class="pstatus-time">9:41</span><span class="pstatus-icons">&#9650; &#9644; &#9646;</span></div>
-            <div class="papp">
-              <div class="pgreet">
-                <div><div class="pgreet-hi">Good morning</div><div class="pgreet-name">Today&rsquo;s plan</div></div>
-                <div class="pavatar">JA</div>
-              </div>
-              <div class="pcard">
-                <div class="pcard-label indigo">Today&rsquo;s doses</div>
-                <div class="dose-item"><div><div class="dose-name">Atorvastatin 20mg</div><div class="dose-when">8:00 AM &middot; with water</div></div><div class="dose-check done">&#10003;</div></div>
-                <div class="dose-item"><div><div class="dose-name">Lisinopril 10mg</div><div class="dose-when">1:00 PM &middot; with food</div></div><div class="dose-check todo"></div></div>
-                <div class="dose-item"><div><div class="dose-name">Metformin 500mg</div><div class="dose-when">8:00 PM &middot; with dinner</div></div><div class="dose-check todo"></div></div>
-              </div>
-              <div class="pcard">
-                <div class="pcard-label amber">OTC Safety Alert</div>
-                <div class="otc-alert-row">
-                  <div class="otc-icon">&#9888;&#65039;</div>
-                  <div class="otc-text"><div class="otc-badge">Caution</div><div class="otc-drug">Ibuprofen 400mg</div><div class="otc-msg">May interact with Lisinopril. Speak to your pharmacist first.</div></div>
+        <div class="trust-disclaimer">
+          <strong>Important:</strong> Pillara is a patient support tool, not a medical device or clinical service.
+          It does not provide diagnoses, prescriptions, or medical advice. Always follow guidance from your GP,
+          pharmacist, or other qualified healthcare professional. If you are unsure about a medicine or your health,
+          speak to a clinician promptly.
+        </div>
+      </div>
+    </section>
+
+    <section class="waitlist-bg" id="waitlist">
+      <div class="section-wrap">
+        <div class="waitlist-inner">
+          <div class="waitlist-left">
+            <div class="section-label">Early access</div>
+            <h2>Be first<br />when we launch.</h2>
+            <p>
+              Pillara is in development. Join the waitlist and we’ll let you know when early access opens
+              on your platform of choice.
+            </p>
+
+            <div class="perks">
+              <div class="perk-row"><span class="perk-check">✓</span> Priority access before wider public launch.</div>
+              <div class="perk-row"><span class="perk-check">✓</span> Your platform preference helps shape what we build first.</div>
+              <div class="perk-row"><span class="perk-check">✓</span> Healthcare organisations can register interest for pilot programmes.</div>
+              <div class="perk-row"><span class="perk-check">✓</span> No spam. Unsubscribe any time. No medical data needed.</div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div class="form-title">Join the Pillara waitlist</div>
+            <div class="form-sub">Takes less than 60 seconds.</div>
+
+            <form id="waitlist-form" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="first_name">First name</label>
+                  <input type="text" id="first_name" name="first_name" autocomplete="given-name" placeholder="Jane" required />
+                </div>
+
+                <div class="field">
+                  <label for="last_name">Last name</label>
+                  <input type="text" id="last_name" name="last_name" autocomplete="family-name" placeholder="Smith" required />
                 </div>
               </div>
-              <div class="pcard">
-                <div class="pcard-label blue">Upcoming appointment</div>
-                <div class="appt-row">
-                  <div class="appt-date"><div class="appt-month">Apr</div><div class="appt-day">24</div></div>
-                  <div><div class="appt-title">GP Review &mdash; Dr. Osei</div><div class="appt-sub">10:30 AM &middot; 3 questions prepared &#10003;</div></div>
-                </div>
+
+              <div class="field">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="jane@example.com" required />
               </div>
+
+              <div class="field">
+                <label for="role">I’m joining as</label>
+                <select id="role" name="role" required>
+                  <option value="">Select one</option>
+                  <option>Patient</option>
+                  <option>Carer</option>
+                  <option>Pharmacist</option>
+                  <option>GP practice / clinic</option>
+                  <option>Healthcare partner</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <span class="plat-label">Which platform will you use?</span>
+              <div class="plat-chips">
+                <input type="radio" name="platform" id="p-ios" value="iOS" class="plat-opt" required />
+                <label for="p-ios">iPhone / iPad</label>
+
+                <input type="radio" name="platform" id="p-android" value="Android" class="plat-opt" />
+                <label for="p-android">Android</label>
+
+                <input type="radio" name="platform" id="p-web" value="Web" class="plat-opt" />
+                <label for="p-web">Web browser</label>
+
+                <input type="radio" name="platform" id="p-all" value="All platforms" class="plat-opt" />
+                <label for="p-all">All of them</label>
+              </div>
+
+              <div class="field">
+                <label for="message">
+                  Anything you’d like us to know?
+                  <span style="font-weight:300;color:var(--muted)">(optional)</span>
+                </label>
+                <textarea id="message" name="message" placeholder="e.g. what you’d most like the app to help with, or whether you’re interested in a pilot."></textarea>
+                <small>Please don’t include detailed medical history or urgent health concerns here.</small>
+              </div>
+
+              <label class="consent-row">
+                <input type="checkbox" name="consent" required />
+                I agree to be contacted about Pillara updates, early access, and launch information.
+              </label>
+
+              <div id="form-error"></div>
+
+              <button type="submit" class="btn-submit" id="submit-btn">Join the waitlist →</button>
+              <p class="form-fine">No credit card. No medical data. Unsubscribe anytime.</p>
+            </form>
+
+            <div id="form-success">
+              <div class="success-icon">✓</div>
+              <div class="success-title">You’re on the list.</div>
+              <div class="success-sub">We’ll be in touch when early access opens.</div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="pshell pshell-side pshell-right">
-          <div class="pscreen pscreen-side">
-            <div class="pstatus"><span class="pstatus-time">9:41</span><span class="pstatus-icons">&#9650; &#9644; &#9646;</span></div>
-            <div class="appt-screen">
-              <div class="appt-screen-label">Appointment prep</div>
-              <div class="appt-screen-title">Questions for Dr. Osei</div>
-              <div class="question-list">
-                <div class="question-item"><span class="q-num">1</span>Is it safe to take ibuprofen with my blood pressure medication?</div>
-                <div class="question-item"><span class="q-num">2</span>Should I take Metformin with food every time?</div>
-                <div class="question-item"><span class="q-num">3</span>When should I get my next cholesterol check?</div>
+    <section class="faq-bg" id="faq">
+      <div class="section-wrap">
+        <div>
+          <div class="section-label">Questions & answers</div>
+          <h2>Things people<br />want to know.</h2>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <details>
+              <summary>Is Pillara a replacement for my doctor or pharmacist?</summary>
+              <div class="faq-answer">
+                No. Pillara is a support tool that helps you stay organised and informed between appointments.
+                Always consult your GP or pharmacist for clinical decisions.
               </div>
-            </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>Which devices will Pillara work on?</summary>
+              <div class="faq-answer">
+                Pillara is planned for iPhone, iPad, Android devices, and web. Your platform preference helps us prioritise.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>Can it help if I take several medicines?</summary>
+              <div class="faq-answer">
+                Pillara is being designed to support people managing multiple medicines by helping organise reminders,
+                notes, and appointment questions in one place.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>How do OTC information prompts work?</summary>
+              <div class="faq-answer">
+                Pillara is being designed to help highlight information that may be worth checking with a pharmacist
+                when considering over-the-counter products.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>Is Pillara suitable for carers?</summary>
+              <div class="faq-answer">
+                Yes. Pillara is being designed to support carers and families managing medicine routines on behalf of loved ones.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>Is my health information secure?</summary>
+              <div class="faq-answer">
+                Pillara is being built with privacy and responsible data handling in mind. Full privacy details will be published before launch.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>When will the app be available?</summary>
+              <div class="faq-answer">
+                Pillara is currently in development. Join the waitlist to be notified when early access opens.
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>Can pharmacies or GP practices get involved?</summary>
+              <div class="faq-answer">
+                Yes. Healthcare organisations interested in pilots or partnerships are welcome to join the waitlist or contact us directly.
+              </div>
+            </details>
           </div>
         </div>
-
-        <div class="phone-fade"></div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="problem-bg" id="problem">
-  <div class="section-wrap">
-    <div class="reveal">
-      <div class="section-label">The challenge</div>
-      <h2>Managing medicines<br />is harder than it <em>should</em> be.</h2>
-      <p class="section-sub">Most people rely on memory, paper notes, or nothing at all. It&rsquo;s easy to get things wrong &mdash; and the consequences can be serious.</p>
-    </div>
-    <div class="problem-grid">
-      <div class="problem-card reveal"><div class="prob-num">01</div><p class="prob-text"><strong>Forgotten doses</strong> happen more when you&rsquo;re juggling more than one medicine at once.</p></div>
-      <div class="problem-card reveal"><div class="prob-num">02</div><p class="prob-text">Medicine labels are <strong>written for professionals</strong>, not the patients who actually use them.</p></div>
-      <div class="problem-card reveal"><div class="prob-num">03</div><p class="prob-text">A <strong>painkiller or cold remedy</strong> from the pharmacy could interact with your current medicines without you knowing.</p></div>
-      <div class="problem-card reveal"><div class="prob-num">04</div><p class="prob-text">GP appointments come and go without the <strong>questions you meant to ask</strong> ever getting answered.</p></div>
-      <div class="problem-card reveal"><div class="prob-num">05</div><p class="prob-text">Managing medicines for someone else adds <strong>another layer of stress</strong> and complexity for carers and families.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="features">
-  <div class="section-wrap">
-    <div class="reveal"><div class="section-label">What the app does</div><h2>Four tools.<br />One beautiful app.</h2></div>
-    <div class="features-grid">
-      <div class="feat-card c1 reveal"><div class="feat-icon fi-1">&#9200;</div><h3>Smart medication reminders</h3><p>Set a schedule for every medicine, get timely reminders on your lock screen, and track what you&rsquo;ve taken &mdash; so staying consistent feels easier, not heavier.</p></div>
-      <div class="feat-card c2 reveal"><div class="feat-icon fi-2">&#128214;</div><h3>Clear medicine instructions</h3><p>Every medicine in your list comes with simple, jargon-free guidance &mdash; when to take it, how to take it, what to watch out for, and why it matters.</p></div>
-      <div class="feat-card c3 reveal"><div class="feat-icon fi-3">&#128197;</div><h3>Appointment support</h3><p>Track GP and pharmacist appointments, prepare your questions in advance, and follow up on action points &mdash; so each visit feels organised and useful.</p></div>
-      <div class="feat-card c4 reveal"><div class="feat-icon fi-4">&#128269;</div><h3>OTC safety checker</h3><p>Before buying a painkiller, supplement, or cold remedy, check it against your medicine record. Pillara flags anything that may need extra caution or a pharmacist conversation.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="how-bg" id="how">
-  <div class="section-wrap">
-    <div class="reveal"><div class="section-label">Getting started</div><h2>Up and running<br />in minutes.</h2><p class="section-sub">Pillara is designed to feel intuitive from the very first screen. No clinical jargon. No complicated setup.</p></div>
-    <div class="how-steps">
-      <div class="how-step reveal"><div class="how-num">1</div><h4>Join or download</h4><p>Start with early access today, then use Pillara on the platform you prefer as releases roll out.</p></div>
-      <div class="how-step reveal"><div class="how-num">2</div><h4>Set up your profile</h4><p>Add your medicines, allergies, and health conditions in just a few taps.</p></div>
-      <div class="how-step reveal"><div class="how-num">3</div><h4>Get reminders &amp; checks</h4><p>Receive timely dose reminders and safety prompts right when they matter.</p></div>
-      <div class="how-step reveal"><div class="how-num">4</div><h4>Stay prepared</h4><p>Manage appointments, check OTC products, and build better medicine habits over time.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="safety">
-  <div class="section-wrap">
-    <div class="reveal"><div class="section-label">Safety &amp; trust</div><h2>Built with your safety<br />at the <em>centre.</em></h2></div>
-    <div class="trust-grid">
-      <div class="trust-card reveal"><span class="trust-icon">&#128274;</span><h4>Your data stays private</h4><p>Pillara is being built with privacy, secure handling, and user control in mind. Full privacy details will be published before launch.</p></div>
-      <div class="trust-card reveal"><span class="trust-icon">&#127807;</span><h4>Designed for real patients</h4><p>Every feature is built for everyday people &mdash; not medical professionals. No background knowledge required. No confusing terminology.</p></div>
-      <div class="trust-card reveal"><span class="trust-icon">&#129309;</span><h4>Works alongside your care team</h4><p>Pillara supports your relationship with your GP and pharmacist &mdash; helping you prepare better questions and have more informed conversations.</p></div>
-    </div>
-    <div class="trust-disclaimer reveal"><strong>Important:</strong> Pillara is a patient support tool, not a medical device or clinical service. It does not provide diagnoses, prescriptions, or medical advice. Always follow guidance from your GP, pharmacist, or other qualified healthcare professional. If you are unsure about a medicine or your health, speak to a clinician promptly.</div>
-  </div>
-</section>
-
-<section class="waitlist-bg" id="waitlist">
-  <div class="section-wrap">
-    <div class="waitlist-inner">
-      <div class="waitlist-left reveal">
-        <div class="section-label">Early access</div>
-        <h2>Be first<br />when we launch.</h2>
-        <p>Pillara is in development. Join the waitlist and we&rsquo;ll let you know when early access opens &mdash; on your platform of choice.</p>
-        <div class="perks">
-          <div class="perk-row"><span class="perk-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></span>Priority access before wider public launch.</div>
-          <div class="perk-row"><span class="perk-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></span>Your platform preference helps shape what we build first.</div>
-          <div class="perk-row"><span class="perk-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></span>Healthcare organisations can register interest for pilot programmes.</div>
-          <div class="perk-row"><span class="perk-check"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></span>No spam. Unsubscribe any time. No medical data needed.</div>
+    <section class="cta-bottom">
+      <div class="section-wrap">
+        <div class="cta-inner">
+          <div class="section-label">Coming to iOS · Android · Web</div>
+          <h2>Your medication support app<br />is <em>almost here.</em></h2>
+          <p>
+            Join patients, carers, and healthcare partners helping shape a simpler way to stay organised with medicines.
+          </p>
+          <a href="#waitlist" class="btn-fill">Get early access →</a>
         </div>
       </div>
-
-      <div class="form-card reveal">
-        <div class="form-title">Join the Pillara waitlist</div>
-        <div class="form-sub">Takes less than 60 seconds.</div>
-        <form id="waitlist-form" novalidate>
-          <div class="form-row">
-            <div class="field"><label for="first_name">First name</label><input type="text" id="first_name" name="first_name" autocomplete="given-name" placeholder="Jane" required /></div>
-            <div class="field"><label for="last_name">Last name</label><input type="text" id="last_name" name="last_name" autocomplete="family-name" placeholder="Smith" required /></div>
-          </div>
-          <div class="field"><label for="email">Email address</label><input type="email" id="email" name="email" autocomplete="email" placeholder="jane@example.com" required /></div>
-          <div class="field">
-            <label for="role">I&rsquo;m joining as</label>
-            <select id="role" name="role" required>
-              <option value="">Select one</option>
-              <option>Patient</option><option>Carer</option><option>Pharmacist</option><option>GP practice / clinic</option><option>Healthcare partner</option><option>Other</option>
-            </select>
-          </div>
-          <span class="plat-label">Which platform will you use?</span>
-          <div class="plat-chips">
-            <input type="radio" name="platform" id="p-ios" value="iOS" class="plat-opt" required />
-            <label for="p-ios"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.27.07 2.14.82 3.04.82.9 0 2.58-1.01 4.35-.86 1.41.1 2.69.72 3.47 1.96-3.2 1.92-2.69 5.93.51 7.27-.6 1.67-1.4 3.33-3.37 3.67zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>iPhone / iPad</label>
-            <input type="radio" name="platform" id="p-android" value="Android" class="plat-opt" />
-            <label for="p-android"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5S11 23.33 11 22.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v9c0 .83.67 1.5 1.5 1.5S5 19.33 5 18.5v-9C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v9c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-9c0-.83-.67-1.5-1.5-1.5z"/></svg>Android</label>
-            <input type="radio" name="platform" id="p-web" value="Web" class="plat-opt" />
-            <label for="p-web"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Web browser</label>
-            <input type="radio" name="platform" id="p-all" value="All platforms" class="plat-opt" />
-            <label for="p-all">&#128241; All of them</label>
-          </div>
-          <div class="field">
-            <label for="message">Anything you&rsquo;d like us to know? <span style="font-weight:300;color:var(--muted)">(optional)</span></label>
-            <textarea id="message" name="message" placeholder="e.g. what you'd most like the app to help with, or whether you're interested in a pilot."></textarea>
-            <small>Please don&rsquo;t include detailed medical history or urgent health concerns here.</small>
-          </div>
-          <label class="consent-row"><input type="checkbox" name="consent" required />I agree to be contacted about Pillara updates, early access, and launch information.</label>
-          <div id="form-error"></div>
-          <button type="submit" class="btn-submit" id="submit-btn">Join the waitlist &rarr;</button>
-          <p class="form-fine">No credit card. No medical data. Unsubscribe anytime.</p>
-        </form>
-        <div id="form-success">
-          <div class="success-icon">&#10003;</div>
-          <div class="success-title">You&rsquo;re on the list.</div>
-          <div class="success-sub">We&rsquo;ll be in touch when early access opens.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="faq-bg" id="faq">
-  <div class="section-wrap">
-    <div class="reveal"><div class="section-label">Questions &amp; answers</div><h2>Things people<br />want to know.</h2></div>
-    <div class="faq-grid">
-      <div class="faq-item reveal"><details><summary>Is Pillara a replacement for my doctor or pharmacist?</summary><div class="faq-answer">No. Pillara is a support tool that helps you stay organised and informed between appointments. Always consult your GP or pharmacist for clinical decisions.</div></details></div>
-      <div class="faq-item reveal"><details><summary>Which devices will the app work on?</summary><div class="faq-answer">Pillara is planned for iPhone, iPad, Android phones and tablets, and as a web app. Tell us your preferred platform when you sign up &mdash; it helps us prioritise what to build first.</div></details></div>
-      <div class="faq-item reveal"><details><summary>Can it help if I take several medicines?</summary><div class="faq-answer">Yes. Pillara is being designed for people managing multiple medicines, with separate reminders and guidance for each part of the routine.</div></details></div>
-      <div class="faq-item reveal"><details><summary>How does the OTC safety checker work?</summary><div class="faq-answer">You search or scan a product you&rsquo;re considering &mdash; like a painkiller, antihistamine, or supplement &mdash; and Pillara checks it against your personal medicine record. If there is a concern, you see a clear alert and next-step guidance.</div></details></div>
-      <div class="faq-item reveal"><details><summary>Is Pillara suitable for carers?</summary><div class="faq-answer">Yes. Pillara is being designed to support carers and families managing medicines on behalf of loved ones, not just individual patients.</div></details></div>
-      <div class="faq-item reveal"><details><summary>Is my health information secure?</summary><div class="faq-answer">Pillara is being built with encryption, secure handling, and responsible data practices in mind. Full privacy details will be published before launch.</div></details></div>
-      <div class="faq-item reveal"><details><summary>When will the app be available?</summary><div class="faq-answer">Pillara is currently in development. Join the waitlist to be notified when early access opens &mdash; and to help shape what gets built first.</div></details></div>
-      <div class="faq-item reveal"><details><summary>Can pharmacies or GP practices get involved?</summary><div class="faq-answer">Yes. Healthcare organisations interested in pilots or partnerships are welcome to join the waitlist or contact us directly.</div></details></div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-bottom">
-  <div class="section-wrap">
-    <div class="cta-inner reveal">
-      <div class="section-label">Coming to iOS &middot; Android &middot; Web</div>
-      <h2>Your medicine companion<br />is <em>almost here.</em></h2>
-      <p>Join patients, carers, and healthcare partners building a better way to manage medicines &mdash; before the doors open.</p>
-      <a href="#waitlist" class="btn-fill" style="font-size:1rem;padding:16px 36px;">Get early access &rarr;</a>
-      <div class="store-row">
-        <div class="store-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.42c1.27.07 2.14.82 3.04.82.9 0 2.58-1.01 4.35-.86 1.41.1 2.69.72 3.47 1.96-3.2 1.92-2.69 5.93.51 7.27-.6 1.67-1.4 3.33-3.37 3.67zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg><div><div class="store-btn-sub">Download on the</div><div class="store-btn-name">App Store</div></div><span class="store-btn-soon">Soon</span></div>
-        <div class="store-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.16.63.24.97.24.4 0 .8-.1 1.16-.32L16.5 17l-3.32-3.32L3.18 23.76zM20.53 10.56l-2.54-1.47-3.67 3.67 3.67 3.67 2.56-1.49c.73-.42 1.17-1.17 1.17-2s-.44-1.57-1.19-1.98zM1.18.8C1.07 1.06 1 1.35 1 1.67v20.66c0 .32.07.61.18.87l.09.09L13 11.5v-.28L1.27.71 1.18.8zM16.5 7L5.31.32C4.95.1 4.55 0 4.15 0c-.34 0-.67.08-.97.24L13.18 10.5 16.5 7z"/></svg><div><div class="store-btn-sub">Get it on</div><div class="store-btn-name">Google Play</div></div><span class="store-btn-soon">Soon</span></div>
-        <div class="store-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><div><div class="store-btn-sub">Open in</div><div class="store-btn-name">Web Browser</div></div><span class="store-btn-soon">Soon</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-```
-
+    </section>
   </main>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-logo">
-        <span class="logo-gem"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+        <span class="logo-gem" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </span>
         Pillara
       </div>
+
       <ul class="footer-links">
         <li><a href="/privacy">Privacy Policy</a></li>
         <li><a href="/terms">Terms of Use</a></li>
         <li><a href="mailto:hello@pillara.app">Contact</a></li>
         <li><a href="mailto:partners@pillara.app">For Healthcare Partners</a></li>
       </ul>
-      <div class="footer-copy">&copy; 2026 Pillara. Not a medical service.</div>
+
+      <div class="footer-copy">
+        © 2026 Pillara. Pillara is not a medical device and does not provide medical advice.
+      </div>
     </div>
   </footer>
 
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-    // ── REPLACE THESE TWO VALUES ──────────────────────────────────────────────
-    const SUPABASE_URL      = 'https://ntrnhjuxzjaydvqbavjw.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
-
-    // ─────────────────────────────────────────────────────────────────────────
+    const SUPABASE_URL = 'https://ntrnhjuxzjaydvqbavjw.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Scroll reveal
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('in'), i * 60);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-    // Mobile menu
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener('click', () => {
         const open = mobileMenu.classList.toggle('open');
         menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
+
       mobileMenu.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', () => {
           mobileMenu.classList.remove('open');
@@ -655,10 +1301,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
       });
     }
 
-    // Waitlist form
-    const form      = document.getElementById('waitlist-form');
+    const form = document.getElementById('waitlist-form');
     const submitBtn = document.getElementById('submit-btn');
-    const errorBox  = document.getElementById('form-error');
+    const errorBox = document.getElementById('form-error');
     const successEl = document.getElementById('form-success');
 
     function showErr(msg) {
@@ -672,21 +1317,40 @@ const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
         e.preventDefault();
         errorBox.style.display = 'none';
 
-        const fn       = form.first_name.value.trim();
-        const ln       = form.last_name.value.trim();
-        const email    = form.email.value.trim().toLowerCase();
-        const role     = form.role.value;
+        const fn = form.first_name.value.trim();
+        const ln = form.last_name.value.trim();
+        const email = form.email.value.trim().toLowerCase();
+        const role = form.role.value;
         const platform = form.querySelector('input[name="platform"]:checked')?.value || '';
-        const consent  = form.consent.checked;
-        const message  = form.message.value.trim();
+        const consent = form.consent.checked;
+        const message = form.message.value.trim();
 
-        if (!fn || !ln)   { showErr('Please enter your full name.'); return; }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Please enter a valid email address.'); return; }
-        if (!role)        { showErr("Please tell us how you're joining."); return; }
-        if (!platform)    { showErr('Please select your preferred platform.'); return; }
-        if (!consent)     { showErr('Please agree to be contacted to continue.'); return; }
+        if (!fn || !ln) {
+          showErr('Please enter your full name.');
+          return;
+        }
 
-        submitBtn.textContent = 'Submitting\u2026';
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showErr('Please enter a valid email address.');
+          return;
+        }
+
+        if (!role) {
+          showErr("Please tell us how you're joining.");
+          return;
+        }
+
+        if (!platform) {
+          showErr('Please select your preferred platform.');
+          return;
+        }
+
+        if (!consent) {
+          showErr('Please agree to be contacted to continue.');
+          return;
+        }
+
+        submitBtn.textContent = 'Submitting…';
         submitBtn.disabled = true;
 
         try {
@@ -694,12 +1358,13 @@ const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
             .from('waitlist_signups')
             .insert({
               first_name: fn,
-              last_name:  ln,
+              last_name: ln,
               email,
               role,
               platform,
-              message:    message || null,
-              consent:    true,
+              message: message || null,
+              consent: true,
+              source: 'landing_page'
             });
 
           if (error) {
@@ -714,16 +1379,14 @@ const SUPABASE_ANON_KEY = 'sb_publishable_OYWOsGkPBietRCrXU_S60w_7ysHSPyb';
 
           form.style.display = 'none';
           successEl.style.display = 'block';
-
         } catch {
           showErr('Network error. Please check your connection and try again.');
         } finally {
-          submitBtn.textContent = 'Join the waitlist \u2192';
+          submitBtn.textContent = 'Join the waitlist →';
           submitBtn.disabled = false;
         }
       });
     }
   </script>
-
 </body>
 </html>
